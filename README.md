@@ -58,6 +58,8 @@
 
 ## Результаты для проверки
 
+Запись экрана RViz при воспроизведении официального обхода: [вид сверху](videos/rviz-top.mp4) и [вид от третьего лица](videos/01%20%E2%80%94%20%D0%9B%D0%BE%D0%BA%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20Go2%20%D0%BD%D0%B0%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20%D0%BE%D1%80%D0%B3%D0%B0%D0%BD%D0%B8%D0%B7%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2.mp4).
+
 - [Выходной bag ROS 2 в формате MCAP](results/localization/rosbag2) и [покадровые замеры](results/localization/frames.csv). Скачайте оба файла каталога bag и откройте его командой `ros2 bag info results/localization/rosbag2`.
 - [Время локализации и доля успешно обработанных сообщений](results/localization/timing.json).
 - [Заезды Go2 и G1 в MuJoCo, контакты и расстояния до цели](results/simulation).
