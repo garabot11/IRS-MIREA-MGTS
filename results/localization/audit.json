@@ -1,0 +1,31 @@
+{
+  "input_scans": 1525,
+  "frames_csv": 1525,
+  "storage": "mcap",
+  "bag_messages": {
+    "/kontur/map3d": 11,
+    "/kontur/walls": 1,
+    "/kontur/status": 1525,
+    "/tf": 1524,
+    "/kontur/pose": 1513,
+    "/kontur/scan": 1513,
+    "/kontur/online_delta": 107,
+    "/kontur/planned_path": 205,
+    "/kontur/path": 254
+  },
+  "online_revisions": 1130,
+  "final_voxels": 1384,
+  "plans": 205,
+  "paths_with_motion": 107,
+  "before_next_scan": 1523,
+  "comparable_scan_gaps": 1524,
+  "missed_indices": [
+    12
+  ],
+  "latency_ms": {
+    "median": 9.567439999360992,
+    "p95": 21.519799799747897,
+    "p99": 31.04483151903314,
+    "max": 102.94306100043062
+  }
+}

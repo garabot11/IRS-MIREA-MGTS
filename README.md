@@ -36,3 +36,7 @@
 - [Измерения CUDA и аппаратного рендеринга EGL](verification/gpu.json).
 
 Для просмотра выходного bag в RViz выполните в двух терминалах с загруженным окружением ROS 2 команды `rviz2 -d hackathon_solution/rviz/top.rviz` и `ros2 bag play results/localization/rosbag2 --clock`.
+
+[Скачать одним файлом .bag](results/localization/localization.mcap.bag). Это те же байты MCAP из выходного bag ROS 2 Jazzy. Формат явно задаётся командой `ros2 bag info -s mcap results/localization/localization.mcap.bag`.
+
+[Независимое чтение опубликованной записи](results/localization/audit.json) подтвердило 1 525 входных сканов, 1 513 опубликованных поз и 205 планов. Время от доступности входа до результата составило 9,57 мс по медиане и 21,52 мс на 95-м процентиле. В 1 523 из 1 524 измеримых интервалов результат появился до следующего скана.
