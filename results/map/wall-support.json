@@ -1,0 +1,26 @@
+{
+  "status": "ready",
+  "mesh": "wall-surface.stl",
+  "source_sha256": "d2e43f20bfff34aeaf64083ddb32c111a7b776b2ee4d441f25ea9e80e1a4c1c6",
+  "mesh_sha256": "02260f639a3089a83a7d6e39288ee0c6fa768333f1df5914cbbabf65eadf11d1",
+  "frame": "map",
+  "units": "m",
+  "source_points": 98601,
+  "vertical_samples": 26161,
+  "used_measured_vertices": 11029,
+  "triangles": 10351,
+  "triangle_area_sum_m2": 58.07667541503906,
+  "max_edge_m": 0.2599468529224396,
+  "support_samples_per_triangle": 28,
+  "max_sample_to_vertical_measurement_m": 0.0899634659784687,
+  "whole_surface_support_bound_m": 0.11497686356342979,
+  "centroid_to_measurement_m": {
+    "p50": 0.036984695153766366,
+    "p95": 0.06268563184662146,
+    "max": 0.08820861959404405
+  },
+  "z_range_m": [
+    0.010118535719811916,
+    2.4227497577667236
+  ]
+}

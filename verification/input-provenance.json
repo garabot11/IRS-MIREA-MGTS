@@ -1,0 +1,16 @@
+{
+  "bag_for_mapping": {
+    "archive_sha256": "e2f0f28321eae5f75224c3ee09e27fad80588489911e0e53ec2383a88e940c86",
+    "files": {
+      "metadata.yaml": "d17f549aa292b801266eef776da1789ad042905be905b57278491dba8e6d4cb8",
+      "bag_for_mapping_0.mcap": "cac84da809623089cc6b04bb43787fabcc94fa67e47f6014597454f4ef8849bf"
+    }
+  },
+  "bag_for_localization": {
+    "archive_sha256": "9ba414629b33947e18ef145b9c16f42e7c8d24b25209345d7253b0c2f5a7727d",
+    "files": {
+      "metadata.yaml": "5eeb652bc139c5f77cac90ca1c099b446a0430b7f4906f27fb0f14d2aceea88f",
+      "bag_for_localization_0.mcap": "08e70f5128c522402f02ed5d9e12a1effdfd7a3fc508256bbcc5c503e60e9784"
+    }
+  }
+}
