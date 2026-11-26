@@ -1,0 +1,188 @@
+#!/usr/bin/env python3
+"""Проверка вычислений и графики NVIDIA в контейнерах проекта."""
+import argparse
+import json
+import os
+import platform
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+from tempfile import TemporaryDirectory
+
+PROBE = Path(__file__).resolve().with_name("kontur_gpu_probe.py")
+APT_SOURCE = Path("/etc/apt/sources.list.d/nvidia-container-toolkit.list")
+KEYRING = Path("/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg")
+NVIDIA_KEY = "C95B321B61E88C1809C4F759DDCAE044F796ECB0"
+
+
+def read_cmd(*command):
+    try:
+        result = subprocess.run(command, capture_output=True, text=True, timeout=15)
+    except (OSError, subprocess.TimeoutExpired):
+        return ""
+    return result.stdout.strip() if result.returncode == 0 else ""
+
+
+def platform_name():
+    return dict(line.split("=", 1) for line in Path("/etc/os-release").read_text().splitlines()
+                if "=" in line).get("ID", "").strip('"') if Path("/etc/os-release").exists() else ""
+
+
+def check(args):
+    runtimes = read_cmd("docker", "info", "--format", "{{range $name, $_ := .Runtimes}}{{$name}} {{end}}").split()
+    gpu = read_cmd("nvidia-smi", "--query-gpu=name,driver_version", "--format=csv,noheader")
+    images = {tag: read_cmd("docker", "image", "inspect", "--format", "{{.Id}}", tag) or None
+              for tag in [args.inspection_image, args.physics_image]}
+    state = dict(os=platform_name(), architecture=platform.machine(), gpu_driver=gpu or None,
+                 nvidia_ctk=read_cmd("nvidia-ctk", "--version").splitlines()[:1],
+                 docker_server=read_cmd("docker", "version", "--format", "{{.Server.Version}}") or None,
+                 docker_runtimes=runtimes, images=images)
+    print(json.dumps(state, indent=2, ensure_ascii=False))
+    if not state["docker_server"] or not all(images.values()):
+        print("Проверьте доступ к Docker и соберите указанные образы.", file=sys.stderr)
+        return 1
+    if args.mode == "gpu" and (not gpu or not state["nvidia_ctk"] or "nvidia" not in runtimes):
+        print("Проверьте драйвер NVIDIA и загрузку runtime в Docker. План: tools/kontur-gpu install",
+              file=sys.stderr)
+        return 1
+    return 0
+
+
+def verify(args):
+    failed = False
+    for probe, tag in [("nanodet", args.inspection_image), ("physics", args.physics_image)]:
+        command = ["docker", "run", "--pull", "never", "--rm", "--network", "none", "-i"]
+        if args.mode == "gpu":
+            caps = "compute,utility" if probe == "nanodet" else "graphics,utility,compute"
+            command += ["--gpus", "all", "-e", "NVIDIA_DRIVER_CAPABILITIES=" + caps]
+        else:
+            command += ["-e", "NVIDIA_VISIBLE_DEVICES=void", "-e", "LIBGL_ALWAYS_SOFTWARE=1"]
+        command += ["-e", "MUJOCO_GL=egl", "--entrypoint", "python", tag, "-", probe, args.mode]
+        print(f"{probe}: {tag} ({args.mode})", flush=True)
+        with PROBE.open("rb") as stream:
+            result = subprocess.run(command, stdin=stream)
+        failed = failed or result.returncode != 0
+    return int(failed)
+
+
+def configured():
+    try:
+        runtime = json.loads(Path("/etc/docker/daemon.json").read_text()).get("runtimes", {}).get("nvidia")
+    except (FileNotFoundError, PermissionError, ValueError):
+        runtime = None
+    return bool(runtime) or "nvidia" in read_cmd("docker", "info", "--format",
+                                                 "{{range $name, $_ := .Runtimes}}{{$name}} {{end}}").split()
+
+
+def install(args):
+    if platform_name() != "ubuntu" or platform.machine() not in {"x86_64", "amd64"}:
+        raise SystemExit("Установка поддерживает Ubuntu x86_64.")
+    driver = bool(read_cmd("nvidia-smi", "--query-gpu=name", "--format=csv,noheader"))
+    client = bool(shutil.which("docker"))
+    server = bool(read_cmd("docker", "info", "--format", "{{.ServerVersion}}"))
+    engine = server or bool(shutil.which("dockerd")) or Path("/usr/bin/dockerd").exists()
+    needs_docker = not client or not engine
+    needs_toolkit = not (shutil.which("nvidia-ctk") and shutil.which("nvidia-container-runtime"))
+    needs_config = not configured()
+    needs_driver = args.with_driver and not driver
+    print("Режим:", "установка" if args.apply else "план (только чтение)")
+    for label, required in [("Docker Engine и CLI (пакет Ubuntu docker.io)", needs_docker),
+                            ("NVIDIA Container Toolkit (официальный подписанный репозиторий)", needs_toolkit),
+                            ("Настройка Docker через nvidia-ctk runtime configure", needs_config),
+                            ("Драйвер через ubuntu-drivers install", needs_driver)]:
+        print(f"  {'выполнить' if required else 'пропустить'} — {label}")
+    if not driver and not args.with_driver:
+        print("Для установки драйвера на новом хосте добавьте --with-driver.")
+    if needs_config and not needs_docker and not read_cmd("docker", "info", "--format", "{{.ServerVersion}}"):
+        print("Проверьте доступ к локальному Docker Engine и состояние его службы.")
+    if not args.apply:
+        return 0
+    if not any([needs_docker, needs_toolkit, needs_config, needs_driver]):
+        return 0
+    if os.geteuid() != 0:
+        raise SystemExit("Для запланированных системных изменений используйте sudo tools/kontur-gpu install --apply.")
+    if os.environ.get("DOCKER_HOST") or os.environ.get("DOCKER_CONTEXT"):
+        raise SystemExit("Настройка предназначена для локального системного Docker Engine с /etc/docker/daemon.json.")
+    env = {**os.environ, "NEEDRESTART_MODE": "l", "DEBIAN_FRONTEND": "noninteractive"}
+
+    def run(*cmd):
+        subprocess.run(cmd, check=True, env=env)
+
+    def apt_install(*packages):
+        # Install missing packages only. Avoid dist-upgrades, removals, and triggers
+        # from upgrades of an existing Docker or containerd service.
+        flags = ["apt-get", "install", "-y", "--no-install-recommends", "--no-remove", "--no-upgrade"]
+        simulation = subprocess.check_output([*flags, "-s", *packages], env={**env, "LC_ALL": "C"}, text=True)
+        for line in simulation.splitlines():
+            if line.startswith("Inst ") and " [" in line and line.split()[1].split(":")[0] in {
+                    "docker-ce", "docker.io", "docker-ce-cli", "containerd", "containerd.io", "runc"}:
+                raise SystemExit("APT планирует обновление работающего контейнерного стека. Требуется отдельное окно обслуживания.")
+        run(*flags, *packages)
+
+    if needs_docker or needs_driver or needs_toolkit:
+        run("apt-get", "update")
+    if needs_docker:
+        if (engine or Path("/run/docker.pid").exists() or Path("/run/docker.sock").exists()) and not client:
+            raise SystemExit("Обнаружен Docker Engine без CLI. Сначала восстановите docker CLI того же дистрибутива.")
+        if read_cmd("dpkg-query", "-W", "-f=${db:Status-Status}", "docker-ce-cli") == "installed":
+            raise SystemExit("Обнаружен docker-ce-cli. Установите соответствующий ему docker-ce из того же репозитория.")
+        apt_install("docker.io")
+    if needs_driver:
+        apt_install("ubuntu-drivers-common")
+        run("ubuntu-drivers", "install")
+        print("После установки драйвера запланируйте перезагрузку хоста и повторите doctor.")
+    if needs_toolkit:
+        apt_install("ca-certificates", "curl", "gnupg")
+        with TemporaryDirectory() as tmp:
+            tmp = Path(tmp)
+            key = tmp / "nvidia.asc"
+            ring = tmp / "nvidia.gpg"
+            run("curl", "--fail", "--silent", "--show-error", "--location", "--proto", "=https",
+                "https://nvidia.github.io/libnvidia-container/gpgkey", "-o", key)
+            listing = subprocess.check_output(["gpg", "--homedir", tmp, "--batch", "--with-colons",
+                                               "--show-keys", key], text=True)
+            fingerprints = [line.split(":")[9] for line in listing.splitlines() if line.startswith("fpr:")]
+            primary_keys = [line for line in listing.splitlines() if line.startswith("pub:")]
+            if len(primary_keys) != 1 or not fingerprints or fingerprints[0] != NVIDIA_KEY:
+                raise SystemExit("Отпечаток ключа репозитория NVIDIA не совпал.")
+            run("gpg", "--homedir", tmp, "--batch", "--dearmor", "-o", ring, key)
+            run("install", "-m", "0644", ring, KEYRING)
+            source = tmp / "nvidia.list"
+            source.write_text(f"deb [signed-by={KEYRING}] https://nvidia.github.io/libnvidia-container/stable/deb/amd64 /\n")
+            run("install", "-m", "0644", source, APT_SOURCE)
+        run("apt-get", "update")
+        apt_install("nvidia-container-toolkit")
+    if needs_config:
+        run("nvidia-ctk", "runtime", "configure", "--runtime=docker")
+        print("Для загрузки новой конфигурации запланируйте ручной перезапуск Docker в окно обслуживания.")
+    return 0
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    sub = parser.add_subparsers(dest="command", required=True)
+    for name, detail in [("check", "Состояние драйвера, Docker и образов"),
+                         ("doctor", "Диагностика хоста и локальных образов"),
+                         ("verify", "Синтетический инференс NanoDet и физика с рендерингом EGL")]:
+        part = sub.add_parser(name, help=detail)
+        part.add_argument("--mode", choices=["cpu", "gpu"], default="gpu")
+        part.add_argument("--inspection-image", default=os.getenv("KONTUR_INSPECTION_IMAGE")
+                          or os.getenv("KONTUR_MAPPING_IMAGE", "kontur-mapping:gpu"))
+        part.add_argument("--physics-image", default=os.getenv("KONTUR_PHYSICS_IMAGE", "kontur-physics:local"))
+        part.set_defaults(func=verify if name == "verify" else check)
+    setup = sub.add_parser("install", help="План подготовки Ubuntu x86_64 и опциональное применение")
+    setup.add_argument("--apply", action="store_true", help="Выполнить системные изменения")
+    setup.add_argument("--with-driver", action="store_true", help="Установить драйвер при отсутствии работающего")
+    setup.set_defaults(func=install)
+    args = parser.parse_args()
+    if args.command != "install" and any(not tag or tag.startswith("-") for tag in [args.inspection_image, args.physics_image]):
+        parser.error("Укажите имена локальных образов.")
+    return args.func(args)
+
+
+if __name__ == "__main__":
+    try:
+        sys.exit(main())
+    except (OSError, subprocess.CalledProcessError) as exc:
+        sys.exit(str(exc))

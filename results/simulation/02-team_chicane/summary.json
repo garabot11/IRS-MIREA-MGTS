@@ -1,0 +1,182 @@
+{
+  "scenario": "team_chicane",
+  "mode": "online",
+  "paced": true,
+  "seed": 2026,
+  "engine": "4.0.1",
+  "ray_backend": "native",
+  "map_sha256": "d2e43f20bfff34aeaf64083ddb32c111a7b776b2ee4d441f25ea9e80e1a4c1c6",
+  "grid_sha256": "b1d2db9c1d177cec6f5478886d3824a17c355d6cf56f257876d9e2ce503947e7",
+  "source_points": 98601,
+  "source_voxel_m": 0.07,
+  "output_augmented_vertices": 98626,
+  "sensor_sha256": "eb5a7e7514e14a76586c0e8b00e55ee115eb3e7929d9feb151d38f81176c5bb1",
+  "physics_steps": 15860,
+  "actual_dofs": 36,
+  "joint_range_rad": [
+    0.4459,
+    0.6769,
+    1.1627,
+    0.316,
+    0.5385,
+    1.0051,
+    0.2916,
+    0.4531,
+    0.555,
+    0.3566,
+    0.5775,
+    0.5909
+  ],
+  "secondary_physics_steps": 15860,
+  "secondary_joint_range_rad": [
+    0.0841,
+    0.4235,
+    0.552,
+    0.1398,
+    0.2978,
+    0.4659,
+    0.1344,
+    0.2424,
+    0.2192,
+    0.1113,
+    0.3746,
+    0.2696
+  ],
+  "secondary_contacts": {
+    "foot_floor": 50534,
+    "body_floor": 0,
+    "static": 0,
+    "primary": 0
+  },
+  "motion_gate_sha256": null,
+  "motion_gate_threshold": null,
+  "motion_gate_ms": {},
+  "motion_flagged_returns": 0,
+  "persistent_proposals": 25,
+  "wall_s": 56.54972095700032,
+  "sim_s": 31.7199999999933,
+  "real_time_factor": 0.5609223080713834,
+  "goal": [
+    2.75,
+    8.35
+  ],
+  "goal_time_s": 30.099999999994196,
+  "final_goal_distance_m": 0.24296177629326873,
+  "initial_goal_distance_m": 4.25,
+  "contacts": {
+    "foot_floor": 48343,
+    "body_floor": 0,
+    "static": 0,
+    "pedestrian": 0,
+    "dog": 0,
+    "humanoid": 0
+  },
+  "first_collision": null,
+  "min_center_distance_to_actor_m": {
+    "dog": 1.0486704620427878,
+    "humanoid": 0.45148157081997725,
+    "barrier": 0.7884471876413938
+  },
+  "min_sampled_surface_gap_m": {
+    "dog": 0.6424241676760848,
+    "humanoid": 0.13065913479426472,
+    "barrier": 0.31180805370189746
+  },
+  "events": {
+    "dog_first_return_s": 0.10000000000000007,
+    "humanoid_first_return_s": 0.10000000000000007,
+    "humanoid_first_observation_s": 0.5600000000000004,
+    "dog_first_observation_s": 0.9000000000000007,
+    "dog_first_command_change_s": 0.9000000000000007,
+    "humanoid_first_command_change_s": 0.9000000000000007,
+    "first_changed_command_s": 0.9000000000000007,
+    "barrier_first_return_s": 1.9200000000000015,
+    "barrier_first_observation_s": 2.1799999999999815,
+    "barrier_first_command_change_s": 2.1799999999999815,
+    "first_nonzero_changed_command_s": 2.3999999999999573
+  },
+  "swept_cells": {
+    "humanoid": {
+      "ever": 19,
+      "still_active": 0,
+      "cleared": 19
+    },
+    "dog": {
+      "ever": 19,
+      "still_active": 0,
+      "cleared": 19
+    }
+  },
+  "persistent_last_hit_from_dynamic_actor": {
+    "pedestrian": 0,
+    "dog": 0,
+    "humanoid": 0
+  },
+  "schedule_lag_ms": {
+    "min": 0.0,
+    "p50": 16005.5662,
+    "p95": 24001.8248,
+    "max": 24829.7106
+  },
+  "samples_over_20ms_schedule_lag": 1582,
+  "observed_scans": 442,
+  "scans": 442,
+  "odom_samples": 4746,
+  "gyro_samples": 7923,
+  "odom_hz": 149.62168978565583,
+  "gyro_hz": 249.7793190416669,
+  "lidar_hz": 13.934426229511141,
+  "range_cutoff_m": 36.6,
+  "scan_time_groups": 8,
+  "return_count": {
+    "min": 392.0,
+    "p50": 511.0,
+    "p95": 579.95,
+    "max": 626.0
+  },
+  "emitted_count": {
+    "min": 534.0,
+    "p50": 634.0,
+    "p95": 696.0,
+    "max": 714.0
+  },
+  "deadlines_missed": 95,
+  "loop_ms": {
+    "min": 45.1975,
+    "p50": 59.2799,
+    "p95": 97.9083,
+    "max": 173.9211
+  },
+  "pose_error_m": {
+    "min": 0.0232,
+    "p50": 0.0561,
+    "p95": 0.1564,
+    "max": 0.1865
+  },
+  "rotation_error_deg": {
+    "min": 0.1299,
+    "p50": 1.249,
+    "p95": 2.4409,
+    "max": 3.4751
+  },
+  "cumulative_path_m": 5.166359393064256,
+  "final_revision": 118,
+  "added_persistent_points": 25,
+  "ever_occupied_cells": 65,
+  "last_active_cells": 4,
+  "cleared_voxels": 238,
+  "visible_free_cells": 2976,
+  "changed_commands": 381,
+  "nav_states": {
+    "yield": 153,
+    "reference_follow": 246,
+    "active_detour": 24,
+    "goal": 19
+  },
+  "team_policy": "active",
+  "other_robots_contacts": {
+    "robot_robot": 0,
+    "body_floor": 0,
+    "obstacle": 0
+  }
+}

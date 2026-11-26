@@ -1,0 +1,141 @@
+{
+  "map_sha256": "d2e43f20bfff34aeaf64083ddb32c111a7b776b2ee4d441f25ea9e80e1a4c1c6",
+  "start_mode": "seeded",
+  "input_qos": "reliable",
+  "expected_scans": 1525,
+  "input_scans": 1525,
+  "poses": 1513,
+  "complete": true,
+  "states": {
+    "NO_ODOM": 1,
+    "SEARCHING": 11,
+    "TRACKING": 1211,
+    "PREDICTED": 302
+  },
+  "timing_ms": {
+    "decode_ms": {
+      "p50": 0.6515679997391999,
+      "p95": 1.157024799249484,
+      "p99": 1.43556000009994,
+      "max": 5.441172999780974
+    },
+    "bootstrap_ms": {
+      "p50": 0.0,
+      "p95": 0.0,
+      "p99": 0.0,
+      "max": 88.56690500033437
+    },
+    "registration_ms": {
+      "p50": 4.991806999896653,
+      "p95": 10.292797799047548,
+      "p99": 13.143739399529295,
+      "max": 16.647428001306253
+    },
+    "quality_ms": {
+      "p50": 0.0,
+      "p95": 1.5795807998074447,
+      "p99": 2.3943015197437485,
+      "max": 3.4692489989538444
+    },
+    "output_ms": {
+      "p50": 2.794048999930965,
+      "p95": 10.27351759948942,
+      "p99": 17.214413000256172,
+      "max": 53.33751900070638
+    },
+    "callback_ms": {
+      "p50": 8.869997000147123,
+      "p95": 20.04772299987962,
+      "p99": 28.455597760184897,
+      "max": 101.80382100043062
+    },
+    "available_to_output_ms": {
+      "p50": 9.567439999360992,
+      "p95": 21.519799799747897,
+      "p99": 31.04483151903314,
+      "max": 102.94306100043062
+    },
+    "odom_age_ms": {
+      "p50": 3.2935144999999997,
+      "p95": 6.3875668999999995,
+      "p99": 6.797857769999999,
+      "max": 17.409087
+    },
+    "odom_correction_m": {
+      "p50": 0.08094738061563934,
+      "p95": 0.24318527079798338,
+      "p99": 0.2787366256638176,
+      "max": 0.34248916389267897
+    }
+  },
+  "steady_callback_ms": {
+    "p50": 8.884971000043151,
+    "p95": 20.008962698921096,
+    "p99": 28.139567869729945,
+    "max": 42.97256300014851
+  },
+  "startup": {
+    "map_load_ms": 1209.7543159998168,
+    "bootstrap": {
+      "mode": "seeded",
+      "prefix_scans": 12,
+      "train": 66,
+      "validation": 74,
+      "capped_residual_m": 0.0988620505659156,
+      "support": 0.8648648648648649,
+      "alternative_margin_m": -0.024653941610443514,
+      "prior_radius_m": 1.5,
+      "prior_yaw_deg": 30,
+      "admissible": 1
+    },
+    "first_pose_wall_s": 0.9476336209991132
+  },
+  "sensor_span_s": 109.737340689,
+  "wall_span_s": 109.74196455299898,
+  "median_scan_period_ms": 71.991086,
+  "held_out": {
+    "count": 302,
+    "mean_capped_nn_m": {
+      "raw": 0.1823723221259853,
+      "aligned": 0.13007506656749185,
+      "localized": 0.09509839371196074
+    },
+    "improved_vs_aligned": 276
+  },
+  "turn": {
+    "count": 68,
+    "mean_capped_nn_m": {
+      "raw": 0.15545509866102808,
+      "aligned": 0.13116717171297337,
+      "localized": 0.10303435164474967
+    },
+    "improved_vs_aligned": 62
+  },
+  "host_timing": "monotonic callback; same-host DDS source timestamp to output",
+  "causal_max_future_odom_ns": -1192,
+  "online_mapping": {
+    "confirmed_voxels": 1384,
+    "revisions": 1130,
+    "goal_xy": [
+      2.1500000000000004,
+      4.35
+    ],
+    "plans": {
+      "blocked": 98,
+      "ready": 107
+    },
+    "mapping_ms": {
+      "p50": 1.5971760003594682,
+      "p95": 3.222615400227368,
+      "p99": 3.954633040702902,
+      "max": 5.291612000291934
+    },
+    "planning_ms": {
+      "p50": 5.724784001358785,
+      "p95": 12.999316199784515,
+      "p99": 16.76281860127347,
+      "max": 21.658554000168806
+    }
+  },
+  "motion_compensation": true
+}

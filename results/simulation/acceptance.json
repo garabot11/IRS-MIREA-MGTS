@@ -1,0 +1,241 @@
+{
+  "episodes": [
+    {
+      "scenario": "team_cross",
+      "seed": 2026,
+      "checks": {
+        "three_floating_articulated_robots": true,
+        "two_opponents_move_concurrently": true,
+        "localized_and_planned_on_current_revision": true,
+        "goal_reached_on_physics": true,
+        "no_primary_collision": true,
+        "observed_active_detour": true
+      },
+      "accepted": true,
+      "synchronized_scans": 335,
+      "simultaneous_motion_s": 4.94,
+      "observed_moving_encounter_s": 14.9,
+      "different_forward_commands_in_encounter": 23,
+      "strongest_detour_window": {
+        "start_s": 3.2,
+        "end_s": 4.9,
+        "lateral_change_m": 0.2814,
+        "goal_progress_m": 0.4675,
+        "physical_displacement_m": 0.5564,
+        "active_control_scans": 20,
+        "start_live_v_w": [
+          0.126,
+          0.322
+        ],
+        "start_passive_v_w": [
+          0.0,
+          0.0
+        ],
+        "moving_observed_actors": [
+          "humanoid"
+        ]
+      },
+      "max_cross_track_offset_m": 0.2806,
+      "initial_goal_distance_m": 4.253,
+      "final_goal_distance_m": 0.1635,
+      "first_contact": null,
+      "goal_time_s": 22.45999999999843,
+      "opponents": {
+        "dog": {
+          "physical_range_xy_m": [
+            0.941,
+            5.584
+          ],
+          "lidar_returns": 1113,
+          "moving_s": 22.54
+        },
+        "humanoid": {
+          "physical_range_xy_m": [
+            1.825,
+            0.066
+          ],
+          "lidar_returns": 1581,
+          "moving_s": 4.94
+        }
+      },
+      "joint_amplitudes_rad": {
+        "primary": [
+          0.34992,
+          0.39904,
+          0.79802,
+          0.3024,
+          0.58381,
+          0.97664,
+          0.32606,
+          0.4452,
+          0.52297,
+          0.2696,
+          0.40067,
+          0.50712
+        ],
+        "dog": [
+          0.25711,
+          0.38175,
+          0.56951,
+          0.24036,
+          0.36371,
+          0.5555,
+          0.21391,
+          0.45319,
+          0.32953,
+          0.22401,
+          0.34593,
+          0.22561
+        ],
+        "humanoid": [
+          0.30641,
+          0.09824,
+          0.06125,
+          0.40569,
+          0.36932,
+          0.15053,
+          0.41217,
+          0.12534,
+          0.09393,
+          0.50698,
+          0.3318,
+          0.20756
+        ]
+      },
+      "opponent_contacts": {
+        "robot_robot": 0,
+        "body_floor": 0,
+        "obstacle": 0
+      },
+      "sampled_surface_gaps_m": {
+        "dog": 0.08845196209578307,
+        "humanoid": 0.5930682760445575
+      },
+      "evidence": {
+        "summary.json": "98090b4df9402ce082faab64e6cc7d212f18b1326c0e902b9cdc8e916fdfcd64",
+        "evaluation-poses.json": "6799482537721a0de34f459fe37dfc66120f057efe8e6f80076b2117c7daa4ac",
+        "telemetry.csv": "b18e7650b683d964dc35d0f215edcf7682764412fe46862e3f716f0d13a018dd",
+        "render-states.npz": "d376735a92902f154cda8e565593dd20863e10ff616422d5532915f96d4df4a1"
+      }
+    },
+    {
+      "scenario": "team_chicane",
+      "seed": 2026,
+      "checks": {
+        "three_floating_articulated_robots": true,
+        "two_opponents_move_concurrently": true,
+        "localized_and_planned_on_current_revision": true,
+        "goal_reached_on_physics": true,
+        "no_primary_collision": true,
+        "observed_active_detour": true
+      },
+      "accepted": true,
+      "synchronized_scans": 442,
+      "simultaneous_motion_s": 4.52,
+      "observed_moving_encounter_s": 10.2,
+      "different_forward_commands_in_encounter": 25,
+      "strongest_detour_window": {
+        "start_s": 3.28,
+        "end_s": 4.56,
+        "lateral_change_m": 0.1707,
+        "goal_progress_m": 0.3519,
+        "physical_displacement_m": 0.395,
+        "active_control_scans": 19,
+        "start_live_v_w": [
+          0.198,
+          0.3
+        ],
+        "start_passive_v_w": [
+          0.4138,
+          0.144
+        ],
+        "moving_observed_actors": [
+          "humanoid"
+        ]
+      },
+      "max_cross_track_offset_m": 0.8052,
+      "initial_goal_distance_m": 4.253,
+      "final_goal_distance_m": 0.243,
+      "first_contact": null,
+      "goal_time_s": 30.099999999994196,
+      "opponents": {
+        "dog": {
+          "physical_range_xy_m": [
+            0.029,
+            5.374
+          ],
+          "lidar_returns": 384,
+          "moving_s": 21.28
+        },
+        "humanoid": {
+          "physical_range_xy_m": [
+            1.675,
+            0.066
+          ],
+          "lidar_returns": 1928,
+          "moving_s": 4.52
+        }
+      },
+      "joint_amplitudes_rad": {
+        "primary": [
+          0.31522,
+          0.4796,
+          0.92727,
+          0.41577,
+          0.65239,
+          0.94603,
+          0.34961,
+          0.56861,
+          0.56089,
+          0.27261,
+          0.43349,
+          0.54808
+        ],
+        "dog": [
+          0.13497,
+          0.28492,
+          0.45721,
+          0.08137,
+          0.36257,
+          0.54759,
+          0.10337,
+          0.36265,
+          0.26081,
+          0.13432,
+          0.23452,
+          0.20923
+        ],
+        "humanoid": [
+          0.30678,
+          0.09889,
+          0.06062,
+          0.40654,
+          0.36872,
+          0.149,
+          0.41262,
+          0.12538,
+          0.09398,
+          0.50677,
+          0.33204,
+          0.2079
+        ]
+      },
+      "opponent_contacts": {
+        "robot_robot": 0,
+        "body_floor": 0,
+        "obstacle": 0
+      },
+      "sampled_surface_gaps_m": {
+        "dog": 0.6424241676760848,
+        "humanoid": 0.13065913479426472,
+        "barrier": 0.31180805370189746
+      },
+      "evidence": {
+        "summary.json": "d4eb3fc2cea2c0ab77976f0380f221ab2da2f49e6a04845f1deac9da25a1f957",
+        "evaluation-poses.json": "6388c7566d4217d5673a3554bbe28ec79abd9f6fcca5d6f7795b1bceb72ab237",
+        "telemetry.csv": "68ecda3aace996484814da62c78e061087092d2f9d2e12950aec54c827df1fab",
+        "render-states.npz": "8666f8eea6aca2bb66bcca720b046edde109549669aae51c7c93c79250e401bc"
+      }
+    }
+  ]
+}

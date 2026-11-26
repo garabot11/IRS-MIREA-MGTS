@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+# Run MuJoCo as the single physics clock and publish the same state to native RViz.
+set -eo pipefail
+if [[ $# -lt 2 ]]; then
+  echo "Usage: $0 MAP_DIRECTORY NEW_OUTPUT_DIRECTORY [team_cross|team_chicane ...]" >&2
+  exit 2
+fi
+project=$(cd -- "$(dirname -- "$0")/../.." && pwd)
+map=$(realpath -- "$1")
+out=$(realpath -m -- "$2")
+shift 2
+if [[ -e "$out" ]]; then echo "Output already exists: $out" >&2; exit 1; fi
+if [[ ! -s "$map/map3d.ply" || ! -s "$map/grid.npz" ]]; then echo "Input map is incomplete" >&2; exit 1; fi
+if [[ $# -eq 0 ]]; then set -- team_cross team_chicane; fi
+for scene in "$@"; do
+  case "$scene" in team_cross|team_chicane);; *) echo "Unknown scenario: $scene" >&2; exit 2;; esac
+done
+mkdir -p -- "$out"
+stream=$(mktemp -d)
+source "/opt/ros/${ROS_DISTRO:-jazzy}/setup.bash"
+export ROS_LOCALHOST_ONLY=1
+# DISPLAY_DOMAIN_ID lets the presenter choose an isolated local domain.
+export ROS_DOMAIN_ID="${DISPLAY_DOMAIN_ID:-$((30 + RANDOM % 55))}"
+cd "$project"
+pids=()
+finish() {
+  for pid in "${pids[@]}"; do kill "$pid" 2>/dev/null || true; done
+  for pid in "${pids[@]}"; do wait "$pid" 2>/dev/null || true; done
+  rm -rf -- "$stream"
+}
+trap finish EXIT
+trap 'exit 130' INT TERM
+/usr/bin/python3 -B -m hackathon_solution.v2.scene_rviz "$stream" "$map" > "$out/ros.log" 2>&1 &
+pids+=("$!")
+rviz2 -d "$project/hackathon_solution/v2/rviz/team.rviz" > "$out/rviz.log" 2>&1 &
+pids+=("$!")
+xauthfile=${XAUTHORITY:-$HOME/.Xauthority}
+if [[ ! -r "$xauthfile" || -z "${DISPLAY:-}" ]]; then echo "An X11 display and its Xauthority file are required" >&2; exit 1; fi
+index=0
+graphics=()
+if command -v nvidia-smi >/dev/null && nvidia-smi -L >/dev/null 2>&1 &&
+   docker info --format '{{json .Runtimes}}' | grep -q '"nvidia"'; then
+  graphics=(--gpus all -e NVIDIA_DRIVER_CAPABILITIES=graphics,display,utility
+            -e __NV_PRIME_RENDER_OFFLOAD=1 -e __GLX_VENDOR_LIBRARY_NAME=nvidia)
+elif [[ -d /dev/dri ]]; then
+  graphics=(--device /dev/dri)
+  for device in /dev/dri/renderD*; do
+    if [[ -e "$device" ]]; then graphics+=(--group-add "$(stat -c '%g' "$device")"); fi
+  done
+fi
+for scene in "$@"; do
+  index=$((index + 1))
+  target=$(printf '%02d-%s' "$index" "$scene")
+  keep=()
+  if [[ $index == $# && ${KEEP_FINAL:-0} == 1 ]]; then keep=(--keep-viewer); fi
+  for pid in "${pids[@]}"; do if ! kill -0 "$pid" 2>/dev/null; then echo "Viewer failed. See $out/ros.log and $out/rviz.log" >&2; exit 1; fi; done
+  docker run --rm --network none --user "$(id -u):$(id -g)" \
+    "${graphics[@]}" \
+    -e DISPLAY -e XAUTHORITY=/tmp/display-auth -e MUJOCO_GL=glfw -e XDG_CACHE_HOME=/tmp/cache \
+    -v /tmp/.X11-unix:/tmp/.X11-unix:ro -v "$xauthfile:/tmp/display-auth:ro" \
+    -v "$project:/project:ro" -v "$map:/map:ro" -v "$out:/output" -v "$stream:/stream" \
+    -w /project --entrypoint python3 "${PHYSICS_IMAGE:-kontur-physics:local}" -B -m hackathon_solution.v2.simulate \
+    /map /project/hackathon_solution/v2/sensor "/output/$target" --scenario "$scene" --duration 85 \
+    --viewer --scene-stream /stream "${keep[@]}"
+done

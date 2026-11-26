@@ -1,0 +1,319 @@
+{
+  "source": "official organizer MCAP",
+  "raw_frame": "utlidar_lidar",
+  "base_frame": "base_link",
+  "imu_frame": "utlidar_imu",
+  "origin_base_m": [
+    0.2821600181769825,
+    -2.443259809747911e-09,
+    -0.02467000456689175
+  ],
+  "R_base_lidar": [
+    [
+      -0.9659793429437666,
+      -5.297692488685779e-09,
+      0.2586192355682926
+    ],
+    [
+      -5.019952363082697e-09,
+      0.9999999999999996,
+      1.734295849292744e-09
+    ],
+    [
+      -0.2586192355682926,
+      3.770377655920587e-10,
+      -0.965979342943767
+    ]
+  ],
+  "estimator": "Kabsch on first paired scan in mapping, matched by time/ring/intensity",
+  "point_step": 32,
+  "little_endian": true,
+  "fields": [
+    [
+      "x",
+      0,
+      7
+    ],
+    [
+      "y",
+      4,
+      7
+    ],
+    [
+      "z",
+      8,
+      7
+    ],
+    [
+      "intensity",
+      16,
+      7
+    ],
+    [
+      "ring",
+      20,
+      4
+    ],
+    [
+      "time",
+      24,
+      7
+    ]
+  ],
+  "template_scans": 141,
+  "templates": "Directions of observed cloud_base returns in every twelfth mapping scan. Missing emissions and surface reflectivity cannot be recovered. Template ranges and scene coordinates are discarded.",
+  "template_sha256": "eb5a7e7514e14a76586c0e8b00e55ee115eb3e7929d9feb151d38f81176c5bb1",
+  "brief_nominal_hz": {
+    "lidar": 14,
+    "odometry": 100,
+    "imu": 100,
+    "camera": 15
+  },
+  "unknown": [
+    "IMU to body calibration",
+    "hardware/firmware revision",
+    "non-return directions",
+    "hardware range limits and noise model",
+    "camera stream absent from the bags"
+  ],
+  "mapping": {
+    "mcap_sha256": {
+      "bag_for_mapping_0.mcap": "cac84da809623089cc6b04bb43787fabcc94fa67e47f6014597454f4ef8849bf"
+    },
+    "channels": {
+      "/utlidar/imu": {
+        "messages": 30212,
+        "mean_hz": 249.7456473097549,
+        "interval_s": {
+          "min": 0.000144721,
+          "p05": 0.002461314,
+          "median": 0.004000186,
+          "p95": 0.0055339335,
+          "max": 0.017373323
+        },
+        "frame_ids": [
+          "utlidar_imu"
+        ]
+      },
+      "/utlidar/cloud": {
+        "messages": 1688,
+        "mean_hz": 13.95079336782681,
+        "interval_s": {
+          "min": 0.062151194,
+          "p05": 0.0660067317,
+          "median": 0.071770907,
+          "p95": 0.0834795951,
+          "max": 0.097763777
+        },
+        "frame_ids": [
+          "utlidar_lidar"
+        ]
+      },
+      "/utlidar/cloud_base": {
+        "messages": 1688,
+        "mean_hz": 13.95079336782681,
+        "interval_s": {
+          "min": 0.062151194,
+          "p05": 0.0660067317,
+          "median": 0.071770907,
+          "p95": 0.0834795951,
+          "max": 0.097763777
+        },
+        "frame_ids": [
+          "base_link"
+        ]
+      },
+      "/utlidar/robot_odom": {
+        "messages": 18100,
+        "mean_hz": 149.63467654330444,
+        "interval_s": {
+          "min": 0.004000187,
+          "p05": 0.0061201573,
+          "median": 0.006664276,
+          "p95": 0.0069220546,
+          "max": 0.043473483
+        },
+        "frame_ids": [
+          "odom"
+        ]
+      }
+    },
+    "odom_child": [
+      "base_link"
+    ],
+    "base_returns": {
+      "min": 508.0,
+      "p05": 568.0,
+      "median": 638.0,
+      "p95": 695.0,
+      "max": 731.0
+    },
+    "raw_returns": {
+      "min": 1328.0,
+      "p05": 1391.0,
+      "median": 1418.0,
+      "p95": 1434.0,
+      "max": 1438.0
+    },
+    "unpaired_headers": {},
+    "paired_clouds": 1688,
+    "matched_returns": 1073796,
+    "returns_origin_range_m": {
+      "min": 0.18400037288665771,
+      "p05": 0.26104971766471863,
+      "median": 0.606759786605835,
+      "p95": 2.7935233116149902,
+      "max": 36.56680679321289
+    },
+    "rings": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+    ],
+    "time_last_return_s": {
+      "min": 0.05858152359724045,
+      "p05": 0.06272021681070328,
+      "median": 0.06474582105875015,
+      "p95": 0.08022654764354228,
+      "max": 0.09210304170846939
+    },
+    "raw_to_base_error_m": {
+      "min": 1.0958558039925091e-10,
+      "p05": 7.707012267363797e-09,
+      "median": 3.153395591546048e-08,
+      "p95": 1.518290290259455e-07,
+      "max": 8.409098346257125e-06
+    }
+  },
+  "localization": {
+    "mcap_sha256": {
+      "bag_for_localization_0.mcap": "08e70f5128c522402f02ed5d9e12a1effdfd7a3fc508256bbcc5c503e60e9784"
+    },
+    "channels": {
+      "/utlidar/imu": {
+        "messages": 27437,
+        "mean_hz": 249.74486788516919,
+        "interval_s": {
+          "min": 0.00020504,
+          "p05": 0.00245028725,
+          "median": 0.004000187,
+          "p95": 0.0055235025,
+          "max": 0.019463539
+        },
+        "frame_ids": [
+          "utlidar_imu"
+        ]
+      },
+      "/utlidar/robot_odom": {
+        "messages": 16421,
+        "mean_hz": 149.48686252027184,
+        "interval_s": {
+          "min": 0.004000425,
+          "p05": 0.00601815005,
+          "median": 0.006664515,
+          "p95": 0.0069284559,
+          "max": 0.033139706
+        },
+        "frame_ids": [
+          "odom"
+        ]
+      },
+      "/utlidar/cloud": {
+        "messages": 1526,
+        "mean_hz": 13.888024313461417,
+        "interval_s": {
+          "min": 0.063004971,
+          "p05": 0.066005707,
+          "median": 0.071990967,
+          "p95": 0.0834858418,
+          "max": 0.094513893
+        },
+        "frame_ids": [
+          "utlidar_lidar"
+        ]
+      },
+      "/utlidar/cloud_base": {
+        "messages": 1525,
+        "mean_hz": 13.887706686086707,
+        "interval_s": {
+          "min": 0.063004971,
+          "p05": 0.066005707,
+          "median": 0.07199108600000001,
+          "p95": 0.0834860206,
+          "max": 0.094513893
+        },
+        "frame_ids": [
+          "base_link"
+        ]
+      }
+    },
+    "odom_child": [
+      "base_link"
+    ],
+    "base_returns": {
+      "min": 398.0,
+      "p05": 560.0,
+      "median": 634.0,
+      "p95": 691.0,
+      "max": 741.0
+    },
+    "raw_returns": {
+      "min": 1328.0,
+      "p05": 1385.0,
+      "median": 1414.0,
+      "p95": 1433.0,
+      "max": 1438.0
+    },
+    "unpaired_headers": {
+      "1795605832178111076": [
+        "/utlidar/cloud"
+      ]
+    },
+    "paired_clouds": 1525,
+    "matched_returns": 961352,
+    "returns_origin_range_m": {
+      "min": 0.09054487198591232,
+      "p05": 0.2514511048793793,
+      "median": 0.6069517731666565,
+      "p95": 2.7087262749671934,
+      "max": 31.180072784423828
+    },
+    "rings": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+    ],
+    "time_last_return_s": {
+      "min": 0.058968544006347656,
+      "p05": 0.06272362619638443,
+      "median": 0.06791523844003677,
+      "p95": 0.08026117235422134,
+      "max": 0.09225062280893326
+    },
+    "raw_to_base_error_m": {
+      "min": 1.0291345463974137e-10,
+      "p05": 7.62007795534169e-09,
+      "median": 3.116960162136236e-08,
+      "p95": 1.484103814903428e-07,
+      "max": 2.4293999371663616e-06
+    }
+  }
+}

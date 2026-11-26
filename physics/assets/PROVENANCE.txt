@@ -1,0 +1,13 @@
+Unitree Go2 dynamics and contact geometry
+Source: https://github.com/google-deepmind/mujoco_menagerie/tree/4d038b3feae26ec82b46a4d586379114012a8ac7/unitree_go2
+The unmodified go2.xml, scene.xml and OBJ mesh files are distributed under the Unitree license in go2/LICENSE.
+
+Go2 locomotion policy
+Source: https://github.com/fan-ziqi/rl_sar/tree/376d42c9b128f963ab08579762d5a216a976ce39/policy/go2/robot_lab
+actor.npz contains the four linear layers of policy.pt. The original uses an identity normalizer and three ELU activations. The NumPy runtime uses the upstream observation order, action scales, gains and joint mapping. License: Apache-2.0 (LICENSE-policy).
+
+SHA256 of original policy.pt: 9f14cb95e74ac9e5e30954da0fc0c33eaa41e337852ebed19fcee869279ade0b
+SHA256 of actor.npz: 2c36e2f064de37297a16965dc0323aa24c26ad8f7c8f7753660da809fc33b39c
+Reproduce the weight archive from this upstream policy with:
+    model = torch.jit.load("policy.pt", map_location="cpu").eval()
+    np.savez("actor.npz", **{k.removeprefix("actor."): v.numpy() for k, v in model.state_dict().items()})

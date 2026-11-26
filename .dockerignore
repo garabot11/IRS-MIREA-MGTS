@@ -1,0 +1,9 @@
+*
+!inspection/
+!inspection/**
+!physics/
+!physics/**
+!hackathon_solution/
+!hackathon_solution/**
+**/__pycache__
+**/*.pyc

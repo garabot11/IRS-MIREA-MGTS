@@ -27,3 +27,12 @@
 Первый bag даёт базовую карту, второй воспроизводится в ROS 2 со скоростью 1×. В начальном режиме seeded используется стартовая одометрия. Эталонная траектория для второго обхода организаторами не предоставлена. В MuJoCo измеренная карта служит средой для повторяемых заездов с движущимися Go2 и G1.
 
 В каталоге `output/official` появятся ROS 2 bag (MCAP), покадровые замеры и обновлённый слой карты. По умолчанию `run-contest` читает `data/` и пишет в `output/`. Для независимого повтора выберите новый путь через `CONTEST_OUTPUT`.
+
+## Результаты для проверки
+
+- [Выходной bag ROS 2 в формате MCAP](results/localization/rosbag2) и [покадровые замеры](results/localization/frames.csv). Скачайте оба файла каталога bag и откройте его командой `ros2 bag info results/localization/rosbag2`.
+- [Время локализации и доля успешно обработанных сообщений](results/localization/timing.json).
+- [Заезды Go2 и G1 в MuJoCo, контакты и расстояния до цели](results/simulation).
+- [Измерения CUDA и аппаратного рендеринга EGL](verification/gpu.json).
+
+Для просмотра выходного bag в RViz выполните в двух терминалах с загруженным окружением ROS 2 команды `rviz2 -d hackathon_solution/rviz/top.rviz` и `ros2 bag play results/localization/rosbag2 --clock`.

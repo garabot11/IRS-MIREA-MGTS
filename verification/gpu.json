@@ -1,0 +1,26 @@
+[
+  {
+    "probe": "nanodet",
+    "mode": "gpu",
+    "model": "NanoDet",
+    "model_sha256": "4b82da9944b88577175ee23a459dce2e26e6e4be573def65b1055dc2d9720186",
+    "provider": "CUDAExecutionProvider",
+    "profiled_compute_kernels": 225,
+    "outputs": 6,
+    "max_reference_difference": 5.4836273193359375e-06,
+    "onnxruntime": "1.32.0"
+  },
+  {
+    "probe": "physics",
+    "mode": "gpu",
+    "physics": "MuJoCo CPU",
+    "mujoco": "4.0.1",
+    "sim_time_s": 0.16,
+    "body_z_m": 0.47286,
+    "context": "EGL",
+    "gl_vendor": "NVIDIA Corporation",
+    "gl_renderer": "NVIDIA GeForce RTX 5060 Laptop GPU/PCIe/SSE2",
+    "rgb_colors": 637,
+    "frame_sha256": "3fed6b88b8503573c5ee7a3f2ca89fa7392af7bfdc639ab1c2bff052010bdff8"
+  }
+]

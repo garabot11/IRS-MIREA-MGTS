@@ -1,0 +1,93 @@
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+    Help Height: 0
+    Property Tree Widget:
+      Expanded: []
+      Splitter Ratio: 0.64
+  - Class: rviz_common/Time
+    Name: Time
+    SyncMode: 0
+Visualization Manager:
+  Class: ''
+  Name: root
+  Enabled: true
+  Global Options:
+    Fixed Frame: map
+    Background Color: 17; 23; 32
+    Frame Rate: 30
+  Displays:
+    - Class: rviz_default_plugins/PointCloud2
+      Name: Карта прохода 1
+      Enabled: true
+      Topic:
+        Value: /kontur/map3d
+        Reliability Policy: Reliable
+        Durability Policy: Transient Local
+        History Policy: Keep Last
+        Depth: 1
+      Position Transformer: XYZ
+      Color Transformer: FlatColor
+      Color: 159; 178; 201
+      Style: Points
+      Size (Pixels): 2
+      Alpha: 0.52
+      Decay Time: 0
+    - Class: rviz_default_plugins/PointCloud2
+      Name: Текущий скан
+      Enabled: true
+      Topic: {Value: /kontur/scan, Reliability Policy: Best Effort}
+      Position Transformer: XYZ
+      Color Transformer: FlatColor
+      Color: 255; 151; 90
+      Style: Points
+      Size (Pixels): 3
+      Alpha: 0.95
+      Decay Time: 0
+    - Class: rviz_default_plugins/Path
+      Name: Пройденный путь
+      Enabled: true
+      Topic: {Value: /kontur/path, Reliability Policy: Best Effort}
+      Buffer Length: 1
+      Line Style: Billboards
+      Line Width: 0.14
+      Color: 69; 231; 233
+      Alpha: 1
+      Offset: {X: 0, Y: 0, Z: 0.04}
+      Pose Style: None
+    - Class: rviz_default_plugins/Pose
+      Name: Поза робота
+      Enabled: true
+      Topic: {Value: /kontur/pose, Reliability Policy: Best Effort}
+      Shape: Arrow
+      Color: 255; 231; 86
+      Shaft Length: 0.66
+      Shaft Radius: 0.14
+      Head Length: 0.44
+      Head Radius: 0.29
+      Alpha: 1
+  Tools:
+    - Class: rviz_default_plugins/MoveCamera
+  Views:
+    Current:
+      Class: rviz_default_plugins/ThirdPersonFollower
+      Name: Камера за роботом
+      Target Frame: base_link
+      Distance: 6.3
+      Pitch: 0.48
+      Yaw: 3.1415927
+      Focal Point: {X: 0, Y: 0, Z: 0}
+      Near Clip Distance: 0.05
+    Saved: []
+Window Geometry:
+  X: 0
+  Y: 0
+  Width: 1240
+  Height: 700
+  Hide Left Dock: false
+  Hide Right Dock: false
+  Displays:
+    collapsed: false
+  Time:
+    collapsed: false
+  QMainWindow State: 000000ff00000000fd0000000200000000000000ce00000250fc0200000001fb000000100044006900730070006c0061007900730100000027000002500000001a00ffffff00000003000004d80000003ffc0100000001fb0000000800540069006d00650100000000000004d80000004100ffffff000004040000025000000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000

@@ -1,0 +1,102 @@
+Panels: []
+Visualization Manager:
+  Class: ''
+  Name: root
+  Enabled: true
+  Global Options:
+    Fixed Frame: map
+    Background Color: 17; 23; 32
+    Frame Rate: 30
+  Displays:
+  - Class: rviz_default_plugins/MarkerArray
+    Name: Физический заезд
+    Enabled: true
+    Marker Topic:
+      Value: /go2_live/scene
+      Reliability Policy: Reliable
+      Durability Policy: Volatile
+      Depth: 1
+    Topic:
+      Value: /go2_live/scene
+      Reliability Policy: Reliable
+      Durability Policy: Volatile
+      Depth: 1
+  - Class: rviz_default_plugins/MarkerArray
+    Name: Измеренные стены
+    Enabled: true
+    Marker Topic:
+      Value: /go2_live/walls
+      Reliability Policy: Reliable
+      Durability Policy: Transient Local
+      Depth: 1
+    Topic:
+      Value: /go2_live/walls
+      Reliability Policy: Reliable
+      Durability Policy: Transient Local
+      Depth: 1
+  - Class: rviz_default_plugins/PointCloud2
+    Name: Измерения лидара
+    Enabled: true
+    Topic:
+      Value: /go2_live/lidar
+      Reliability Policy: Reliable
+      Durability Policy: Volatile
+      Depth: 1
+    Position Transformer: XYZ
+    Color Transformer: FlatColor
+    Color: 122; 206; 218
+    Style: Points
+    Size (Pixels): 3
+    Alpha: 0.76
+    Decay Time: 0.0
+  - Class: rviz_default_plugins/PointCloud2
+    Name: Пополнение карты
+    Enabled: true
+    Topic:
+      Value: /go2_live/updates
+      Reliability Policy: Reliable
+      Durability Policy: Volatile
+      Depth: 1
+    Position Transformer: XYZ
+    Color Transformer: FlatColor
+    Color: 255; 142; 88
+    Style: Points
+    Size (Pixels): 5
+    Alpha: 0.92
+    Decay Time: 0.0
+  - Class: rviz_default_plugins/PointCloud2
+    Name: Измеренные точки исходной карты
+    Enabled: false
+    Topic:
+      Value: /go2_live/surfaces
+      Reliability Policy: Reliable
+      Durability Policy: Transient Local
+      Depth: 1
+    Position Transformer: XYZ
+    Color Transformer: FlatColor
+    Color: 145; 166; 178
+    Style: Points
+    Size (Pixels): 2
+    Alpha: 0.24
+    Decay Time: 0.0
+  Tools:
+  - Class: rviz_default_plugins/MoveCamera
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Name: Сцена
+      Target Frame: map
+      Distance: 7.4
+      Pitch: 0.59
+      Yaw: 0.14
+      Focal Point:
+        X: 2.72
+        Y: 6.25
+        Z: 0.42
+      Near Clip Distance: 0.025
+    Saved: []
+Window Geometry:
+  Width: 1340
+  Height: 1000
+  Hide Left Dock: true
+  Hide Right Dock: true

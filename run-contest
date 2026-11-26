@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+set -eo pipefail
+root=$(cd -- "$(dirname -- "$0")" && pwd)
+cd "$root"
+data=$(realpath -m -- "${CONTEST_DATA:-$root/data}")
+out=$(realpath -m -- "${CONTEST_OUTPUT:-$root/output}")
+mapping=${MAPPING_IMAGE:-kontur-mapping:gpu}
+physics=${PHYSICS_IMAGE:-kontur-physics:local}
+export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1
+ros_env() {
+    source "/opt/ros/${ROS_DISTRO:-jazzy}/setup.bash"
+    export ROS_DOMAIN_ID=${ROS_DOMAIN_ID:-82} ROS_LOCALHOST_ONLY=1
+}
+case "${1:-help}" in
+    fetch) python3 tools/organizer_data.py fetch "$data" ;;
+    build) docker build -f docker/mapping.Dockerfile -t "$mapping" . && docker build -f docker/physics.Dockerfile -t "$physics" . ;;
+    gpu) shift; MAPPING_IMAGE="$mapping" PHYSICS_IMAGE="$physics" tools/kontur-gpu verify --mode gpu --inspection-image "$mapping" --physics-image "$physics" "$@" ;;
+    map)
+        python3 tools/organizer_data.py verify "$data" mapping
+        mkdir -p "$out"
+        run=(docker run --rm --network none --user "$(id -u):$(id -g)" -v "$data/bag_for_mapping:/bag:ro" -v "$out:/out" "$mapping" python -B -m)
+        if [[ ! -d "$out/baseline" ]]; then "${run[@]}" hackathon_solution.run map /bag /out/baseline; fi
+        "${run[@]}" hackathon_solution.v2.build_prior /bag /out/baseline /out/map ;;
+    replay|audit)
+        python3 tools/organizer_data.py verify "$data" localization
+        ros_env
+        if [[ $1 == replay ]]; then
+            /usr/bin/python3 -B -m hackathon_solution.run replay "$data/bag_for_localization" "$out/map/map3d.ply" "$out/official" --start-mode seeded --reliable-input --online-mapping --motion-compensation
+        else
+            /usr/bin/python3 -B -m hackathon_solution.v2.audit_replay "$data/bag_for_localization" "$out/official"
+        fi ;;
+    show)
+        shift
+        PHYSICS_IMAGE="$physics" hackathon_solution/v2/show-team "$out/map" "$out/team" "$@"
+        /usr/bin/python3 -B -m hackathon_solution.v2.check_active "$out"/team/[0-9]* --output "$out/team/acceptance.json" ;;
+    help|-h|--help) echo "./run-contest {fetch|build|gpu|map|replay|audit|show}" ;;
+    *) echo "Usage: ./run-contest {fetch|build|gpu|map|replay|audit|show}"; [[ ${1:-help} == help ]] ;;
+esac

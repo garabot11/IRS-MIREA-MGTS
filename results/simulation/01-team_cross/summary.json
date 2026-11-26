@@ -1,0 +1,177 @@
+{
+  "scenario": "team_cross",
+  "mode": "online",
+  "paced": true,
+  "seed": 2026,
+  "engine": "4.0.1",
+  "ray_backend": "native",
+  "map_sha256": "d2e43f20bfff34aeaf64083ddb32c111a7b776b2ee4d441f25ea9e80e1a4c1c6",
+  "grid_sha256": "b1d2db9c1d177cec6f5478886d3824a17c355d6cf56f257876d9e2ce503947e7",
+  "source_points": 98601,
+  "source_voxel_m": 0.07,
+  "output_augmented_vertices": 98610,
+  "sensor_sha256": "eb5a7e7514e14a76586c0e8b00e55ee115eb3e7929d9feb151d38f81176c5bb1",
+  "physics_steps": 12040,
+  "actual_dofs": 36,
+  "joint_range_rad": [
+    0.3366,
+    0.6398,
+    0.9857,
+    0.3776,
+    0.4503,
+    0.9521,
+    0.2696,
+    0.4397,
+    0.5202,
+    0.3398,
+    0.4522,
+    0.5774
+  ],
+  "secondary_physics_steps": 12040,
+  "secondary_joint_range_rad": [
+    0.3018,
+    0.3825,
+    0.5876,
+    0.2571,
+    0.3877,
+    0.6107,
+    0.2242,
+    0.3482,
+    0.2521,
+    0.2267,
+    0.4604,
+    0.366
+  ],
+  "secondary_contacts": {
+    "foot_floor": 33963,
+    "body_floor": 0,
+    "static": 0,
+    "primary": 0
+  },
+  "motion_gate_sha256": null,
+  "motion_gate_threshold": null,
+  "motion_gate_ms": {},
+  "motion_flagged_returns": 0,
+  "persistent_proposals": 9,
+  "wall_s": 41.70619140400049,
+  "sim_s": 24.079999999997533,
+  "real_time_factor": 0.577372308268066,
+  "goal": [
+    2.75,
+    8.35
+  ],
+  "goal_time_s": 22.45999999999843,
+  "final_goal_distance_m": 0.16354573858561708,
+  "initial_goal_distance_m": 4.25,
+  "contacts": {
+    "foot_floor": 37585,
+    "body_floor": 0,
+    "static": 0,
+    "pedestrian": 0,
+    "dog": 0,
+    "humanoid": 0
+  },
+  "first_collision": null,
+  "min_center_distance_to_actor_m": {
+    "dog": 0.5607725419918943,
+    "humanoid": 0.8676262216781958
+  },
+  "min_sampled_surface_gap_m": {
+    "dog": 0.08845196209578307,
+    "humanoid": 0.5930682760445575
+  },
+  "events": {
+    "humanoid_first_return_s": 0.2600000000000002,
+    "dog_first_return_s": 0.32000000000000023,
+    "humanoid_first_observation_s": 0.7600000000000006,
+    "humanoid_first_command_change_s": 0.9000000000000007,
+    "first_changed_command_s": 0.9000000000000007,
+    "first_nonzero_changed_command_s": 3.119999999999878,
+    "dog_first_observation_s": 4.1999999999997595,
+    "dog_first_command_change_s": 4.1999999999997595
+  },
+  "swept_cells": {
+    "humanoid": {
+      "ever": 22,
+      "still_active": 0,
+      "cleared": 22
+    },
+    "dog": {
+      "ever": 36,
+      "still_active": 0,
+      "cleared": 36
+    }
+  },
+  "persistent_last_hit_from_dynamic_actor": {
+    "pedestrian": 0,
+    "dog": 0,
+    "humanoid": 0
+  },
+  "schedule_lag_ms": {
+    "min": 0.0,
+    "p50": 9210.1831,
+    "p95": 16638.9561,
+    "max": 17631.194
+  },
+  "samples_over_20ms_schedule_lag": 1200,
+  "observed_scans": 335,
+  "scans": 335,
+  "odom_samples": 3603,
+  "gyro_samples": 6014,
+  "odom_hz": 149.6262458471914,
+  "gyro_hz": 249.75083056480963,
+  "lidar_hz": 13.91196013289179,
+  "range_cutoff_m": 36.6,
+  "scan_time_groups": 8,
+  "return_count": {
+    "min": 312.0,
+    "p50": 500.0,
+    "p95": 559.3,
+    "max": 600.0
+  },
+  "emitted_count": {
+    "min": 534.0,
+    "p50": 635.0,
+    "p95": 696.9,
+    "max": 714.0
+  },
+  "deadlines_missed": 78,
+  "loop_ms": {
+    "min": 48.991,
+    "p50": 62.642,
+    "p95": 81.9897,
+    "max": 125.4763
+  },
+  "pose_error_m": {
+    "min": 0.0267,
+    "p50": 0.0524,
+    "p95": 0.0745,
+    "max": 0.087
+  },
+  "rotation_error_deg": {
+    "min": 0.194,
+    "p50": 1.0273,
+    "p95": 1.8475,
+    "max": 2.5758
+  },
+  "cumulative_path_m": 4.584162612127276,
+  "final_revision": 112,
+  "added_persistent_points": 9,
+  "ever_occupied_cells": 63,
+  "last_active_cells": 0,
+  "cleared_voxels": 207,
+  "visible_free_cells": 2860,
+  "changed_commands": 204,
+  "nav_states": {
+    "yield": 134,
+    "goal": 17,
+    "reference_follow": 163,
+    "active_detour": 21
+  },
+  "team_policy": "active",
+  "other_robots_contacts": {
+    "robot_robot": 0,
+    "body_floor": 0,
+    "obstacle": 0
+  }
+}
